@@ -14,7 +14,6 @@
 
 // Execute `rustlings hint quiz3` or use the `hint` watch subcommand for a hint.
 
-// I AM NOT DONE
 
 pub struct ReportCard {
     pub grade: f32,
@@ -22,10 +21,32 @@ pub struct ReportCard {
     pub student_age: u8,
 }
 
+pub enum Type {
+    NUMBER,
+    CHAR,
+}
+
+fn c(grade :f32)-> &'static str {
+    if(grade < 2.2 ){
+        return "A+";
+    }else{
+        return "B";
+    }
+}
+
 impl ReportCard {
-    pub fn print(&self) -> String {
-        format!("{} ({}) - achieved a grade of {}",
-            &self.student_name, &self.student_age, &self.grade)
+    pub fn print(&self, t: Type) -> String {
+        let v = vec!["A","B","C","D","E","F"];
+        return match t {
+            Type::NUMBER => format!(
+                "{} ({}) - achieved a grade of {}",
+                &self.student_name, &self.student_age, &self.grade
+            ),
+           Type::CHAR => format!(
+                "{} ({}) - achieved a grade of {}",
+                &self.student_name, &self.student_age, c(self.grade)
+            ),
+        };
     }
 }
 
@@ -41,7 +62,7 @@ mod tests {
             student_age: 12,
         };
         assert_eq!(
-            report_card.print(),
+            report_card.print(Type::NUMBER),
             "Tom Wriggle (12) - achieved a grade of 2.1"
         );
     }
@@ -55,7 +76,7 @@ mod tests {
             student_age: 11,
         };
         assert_eq!(
-            report_card.print(),
+            report_card.print(Type::CHAR),
             "Gary Plotter (11) - achieved a grade of A+"
         );
     }
