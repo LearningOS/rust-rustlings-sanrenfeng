@@ -193,7 +193,7 @@ async fn main() {
                 let filter_cond = filters
                     .split(',')
                     .filter(|f| !f.trim().is_empty())
-                    .any(|f| e.name.contains(&f) || fname.contains(&f));
+                    .any(|f| e.name.contains(f) || fname.contains(f));
                 let status = if e.looks_done() {
                     exercises_done += 1;
                     "Done"
@@ -285,7 +285,7 @@ async fn main() {
                 let inner_exercise = exercise;
                 let c_mutex = Arc::clone(&rights);
                 let exercise_check_list_ref = Arc::clone(&exercise_check_list);
-                let _verbose = verbose.clone();
+                let _verbose = verbose;
                 let t = tokio::task::spawn( async move {
                     match run(&inner_exercise, true) {
                         Ok(_) => {
@@ -490,7 +490,7 @@ fn watch(exercises: &[Exercise], verbose: bool) -> notify::Result<WatchStatus> {
 
 fn rustc_exists() -> bool {
     Command::new("rustc")
-        .args(&["--version"])
+        .args(["--version"])
         .stdout(Stdio::null())
         .spawn()
         .and_then(|mut child| child.wait())

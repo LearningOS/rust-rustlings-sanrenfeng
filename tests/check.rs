@@ -5,7 +5,7 @@ use std::process::Command;
 fn check() {
     Command::cargo_bin("rustlings")
         .unwrap()
-        .args(&["--nocapture","myverify"])
+        .args(["--nocapture","myverify"])
         // .current_dir("exercises/")
         .assert()
         .success()
